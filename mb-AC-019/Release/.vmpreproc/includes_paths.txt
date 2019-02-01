@@ -1,0 +1,16 @@
+C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino
+C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs
+C:\Program Files (x86)\Arduino\libraries\Ethernet\src
+C:\Users\star0413\Documents\Arduino\libraries\ModbusIP
+C:\Users\star0413\Documents\Arduino\libraries\Modbus
+C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\src
+C:\Users\star0413\Documents\Arduino\libraries\LiquidCrystal_I2C
+C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src
+C:\Users\star0413\Documents\Arduino\libraries\ReadDigKey
+C:\Users\star0413\Documents\Arduino\libraries\DStemp
+C:\Users\star0413\Documents\Arduino\libraries\OneWire
+C:\Users\star0413\Documents\Arduino\libraries\ACpower
+C:\Program Files (x86)\Arduino\libraries
+c:\program files (x86)\microsoft visual studio\2017\community\common7\ide\extensions\sivbitce.zrh\Micro Platforms\default\debuggers
+C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries
+C:\Users\star0413\Documents\Arduino\libraries
