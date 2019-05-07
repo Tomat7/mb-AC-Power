@@ -1,3 +1,0 @@
-In file included from C:\Users\star0413\Documents\Arduino\mb-AC-Power\mb-AC-019\mb-AC-019.ino:17:0:
-C:\Users\star0413\Documents\Arduino\mb-AC-Power\mb-AC-019\Release\config.h:33:22: fatal error: ModbusIP.h: No such file or directory
-compilation terminated.
