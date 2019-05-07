@@ -136,9 +136,9 @@ void lcdUpdate()
         //sprintf(buff1, "Set %4dw %s", TEH.Pset, show_);
         //sprintf(buff1, "Set %5d U: %3d", TEH.Angle, uint16_t(TEH.Unow));
     }
-    lcd.setCursor(0, 0); 
+    lcd.setCursor(0, 0);
     lcd.print(buff0);
-    lcd.setCursor(0, 1); 
+    lcd.setCursor(0, 1);
     lcd.print(buff1);
 
     if (!ModbusON && !set_menu)
