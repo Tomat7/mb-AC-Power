@@ -5,7 +5,7 @@
 #define I2C_LCDADDRESS 0x3F     // адрес LCD дисплея - необходимо найти с помощью i2c_scanner.ino
 #define SERIALSPEED 115200      // скорость в последовательном порту
 #define SERIAL_CONFIG           // если нужно показать в Serial _только_ конфигурацию при старте
-//#define SERIAL_INFO             // если нужно постоянно выдавать информацию в Serial (см. макросы PRINT* в config.h)
+#define SERIAL_INFO             // если нужно постоянно выдавать информацию в Serial (см. макросы PRINT* в config.h)
 
 #define U_RATIO 0.304           // множитель для напряжения - нужно сделать "1" если схема не модифицировалась
 #define ETHERNET_WIZ5100        // используется w5100 шилд - с регулятором мощности только он!
