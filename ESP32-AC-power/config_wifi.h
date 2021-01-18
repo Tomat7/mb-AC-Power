@@ -7,9 +7,9 @@
 #define ETHERNET_IP IP_ADDR_BASE + PLC_ID  // задаём IP адрес Ethernet модуля 
 #endif
 
-#define WIFI_NAME "Tomat1"
-#define WIFI_PASS "filimon7"
+#define WIFI_NAME "wifi1234"
+#define WIFI_PASS "wifi1234"
 
 #define OTA_HOSTNAME "PLC-7 POWER_v" VERSION_CODE
-#define OTA_PASS "filimon7"
+#define OTA_PASS "otapass123"
 #define OTA_PORT 8266
