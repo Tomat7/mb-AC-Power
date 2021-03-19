@@ -1,30 +1,11 @@
-void setup_SerialOLED()
+void setup_Serial()
 {
-	LD_init();
-	LD_clearDisplay();
-
-	CPRINT(strConfig);
-	log_cfg_f(" . VERSION: ", VERSION_CODE);
-
-	strVer = strVersion.substring((1 + strVersion.lastIndexOf('\\')), strVersion.lastIndexOf('.'));
-	strVer += " v";
-	strVer += VERSION_CODE;
-	char chVer[21];
-	strVer.toCharArray(chVer, 21);
-	LD_printString_6x8(chVer, LCDX1, 0);
-	LD_printString_6x8(__DATE__, LCDX1, 2);
-
-#ifdef USE_3PHASE
-	LD_printString_6x8("3xPHASE", 72, 2);
-#endif
-
-#ifdef USE_OLED
-	log_cfg_ln("+ OLED configured OK.");
-#else
-	log_cfg_ln("-- NO OLED in this version.");
+#ifdef SERIAL_CONFIG
+  Serial.begin(115200);
+  delay(1000);
+	Serial.print(strConfig);
 #endif
 }
-
 
 void setup_Encoder()
 {

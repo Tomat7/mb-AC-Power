@@ -1,6 +1,6 @@
 #pragma once
 
-#define PLC_ID 0x07	// Задает IP-address если нет USE_DHCP. See config_wifi.h for details.
+#define PLC_ID 0x07		// Задает IP-address если нет USE_DHCP. See config_wifi.h for details.
 #define SKETCHINFO __DATE__ " " __TIME__ " " __FILE__
 
 //#define USE_DHCP		// если нет USE_DHCP IP-address будет задан на основе PLC_ID.
@@ -8,12 +8,12 @@
 #define USE_MODBUS		// устанавливать мощность из регистров Модбаса
 //#define USE_SETSERIAL	// устанавливать мощность с СОМ-порта
 //#define USE_WEBSERVER	// устанавливать/показывать мощность с/на WEB-странице
-#define USE_TELNET		// запусткать telnetd для возможности диагностики
+#define USE_TELNET		// запусткать telnetd для возможности диагностики (почти бесполезная фича :-)
 #define USE_ENCODER		// устанавливать мощность с энкодера
 #define USE_OLED		// можно работать и без дисплея
-#define USE_OTA			// обновление по Wi-Fi (почти бесполезная фича)
+#define USE_OTA			// обновление по Wi-Fi (почти бесполезная фича :-)
 #define USE_DS18B20		// использовать датчик температуры. коннфигурация ниже
-//#define USE_TASK_INFO	// вывод информации в Serial в отдельном task, а не в loop()
+//#define USE_TASK_INFO	// вывод информации в Serial в отдельном task, а не в loop() (не нужно)
 
 #define MAX_SRV_CLIENTS 1
 #define POWER_MAX 3500		// больше этой мощности установить не получится

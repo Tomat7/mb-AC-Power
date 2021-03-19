@@ -9,6 +9,19 @@
 #define LCDX2 67          // смещение 2-го "столбца" на экране
 #endif
 
+#ifdef SERIAL_DEBUG
+#ifndef SERIAL_INFO
+#define SERIAL_INFO
+#endif
+#define DPRINTF(a, ...) Serial.print(a); Serial.println(__VA_ARGS__)
+#define DPRINTLN(...) (Serial.println(__VA_ARGS__))
+#define DPRINT(...) (Serial.print(__VA_ARGS__))
+#else
+#define DPRINTF(a, ...)
+#define DPRINTLN(...)
+#define DPRINT(...)
+#endif  // SERIAL_DEBUG
+
 #ifdef SERIAL_INFO
 #ifndef SERIAL_CONFIG
 #define SERIAL_CONFIG
@@ -31,19 +44,6 @@
 #define CPRINTLN(xArg)
 #define CPRINT(zArg)
 #endif  // SERIAL_CONFIG
-
-#ifdef SERIAL_DEBUG
-#ifndef SERIAL_INFO
-#define SERIAL_INFO
-#endif
-#define DPRINTF(a, ...) Serial.print(a); Serial.println(__VA_ARGS__)
-#define DPRINTLN(...) (Serial.println(__VA_ARGS__))
-#define DPRINT(...) (Serial.print(__VA_ARGS__))
-#else
-#define DPRINTF(a, ...)
-#define DPRINTLN(...)
-#define DPRINT(...)
-#endif  // SERIAL_DEBUG
 
 #ifdef DEV_DEBUG
 #define D(a) a

@@ -5,17 +5,20 @@ void initETH()
 #ifdef ESP32
 //  WiFi.disconnect(true);
 #ifdef USE_DHCP
-	log_cfg_f("+ WiFi will use DCHP");
+	log_cfg_ln("+ WiFi will use DCHP");
+	WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE);
+	WiFi.setHostname(ESP_HOSTNAME);
 #else
 	if (WiFi.config(local_IP, gateway, subnet)) { log_cfg_ln("+ WiFi set static ip-address OK"); }
 	else { log_cfg_ln("-- WiFi set static IP-address ERROR"); }
+  WiFi.setHostname(ESP_HOSTNAME);
 #endif
 
-	log_cfg_f(" . WiFi connecting to ", WIFI_NAME);
+	log_cfg_ln(" . WiFi connecting to ", WIFI_NAME);
 	WiFi.mode(WIFI_STA);
 	WiFi.setSleep(false);
 	WiFi.begin(WIFI_NAME, WIFI_PASS);
-	log_cfg_f(" . MAC: ", WiFi.macAddress());
+	log_cfg_ln(" . MAC: ", WiFi.macAddress());
 
 	static char macbuff[17] = { "                " };
 	String macStr = WiFi.macAddress();
@@ -68,9 +71,9 @@ void check_WiFi()
 void serialIP()
 {
 #ifdef ESP32
-	log_cfg_f(" . IP: ", IPtoStr(WiFi.localIP()));
-	log_cfg_f(" . MASK: ", IPtoStr(WiFi.subnetMask()));
-	log_cfg_f(" . GATEWAY: ", IPtoStr(WiFi.gatewayIP()));
+	log_cfg_ln(" . IP: ", IPtoStr(WiFi.localIP()));
+	log_cfg_ln(" . MASK: ", IPtoStr(WiFi.subnetMask()));
+	log_cfg_ln(" . GATEWAY: ", IPtoStr(WiFi.gatewayIP()));
 #endif
 }
 

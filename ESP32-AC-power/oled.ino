@@ -1,3 +1,27 @@
+void setup_Display()
+{
+  LD_init();
+  LD_clearDisplay();
+
+  strVer = strVersion.substring((1 + strVersion.lastIndexOf('\\')), strVersion.lastIndexOf('.'));
+  strVer += " v";
+  strVer += VERSION_CODE;
+  char chVer[21];
+  strVer.toCharArray(chVer, 21);
+  LD_printString_6x8(chVer, LCDX1, 0);
+  LD_printString_6x8(__DATE__, LCDX1, 2);
+
+#ifdef USE_3PHASE
+  LD_printString_6x8("3xPHASE", 72, 2);
+#endif
+
+#ifdef USE_OLED
+  log_cfg_ln("+ OLED configured OK.");
+#else
+  log_cfg_ln("-- NO OLED in this version.");
+#endif
+}
+
 void display_Oled()
 {
 #ifdef USE_OLED
@@ -90,4 +114,3 @@ void display_OledStatus()
 	else LD.printString_12x16(" _OFF", 69, 6);
 #endif //USE_OLED
 }
-

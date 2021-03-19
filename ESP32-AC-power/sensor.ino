@@ -17,7 +17,7 @@ void setup_DS()
 		if (DS[i].Connected) dsOK = "+ ";
 		else dsOK = "-- ";
 		dsOK += "DS " + String(i) + ": ";
-		log_cfg_f(dsOK, DS[i].LibConfig);
+		log_cfg_ln(dsOK, DS[i].LibConfig);
 		// String sInfo = ".  ID " + String(i, DEC) + " | Connected " + String(DS[i].Connected, DEC);
 		// CPRINTLN(sInfo);
 #endif	// SERIAL_CONFIG

@@ -158,6 +158,8 @@ void Telnet_input(uint8_t x)
 				//Telnet_println("Uptime...", x);
 				Serial.println(strUptime());
 				Telnet_print1(strUptime(), x);
+				Serial.println(strFreeMem());
+				Telnet_print1(strFreeMem(), x);
 				//showDebug = true;
 			}
 			
@@ -190,6 +192,13 @@ String strUptime()
 	int hr = min / 60;
 	snprintf(UpTimeStr, 50, "Uptime:%4d:%02d:%02d", hr, min % 60, sec % 60);
 	return String(UpTimeStr);
+}
+
+String strFreeMem()
+{
+	char FreeMemStr[30];
+	snprintf(FreeMemStr, 50, "Free memory:%7d bytes", ESP.getFreeHeap());
+	return String(FreeMemStr);
 }
 
 #endif	// USE_TELNET

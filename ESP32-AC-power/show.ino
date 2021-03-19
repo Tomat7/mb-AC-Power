@@ -44,7 +44,7 @@ void print_More()
 
 #else
 		log_debug_f("U = ", TEH.Unow);
-		log_debug_f("I = ", TEH.Inow, 3);
+		log_debug_f("I = ", TEH.Inow);
 		log_debug_f("ZCross/sec: ", TEH.CounterZC); //_zcCounter = 0;
 		log_debug_f("TriacInts/sec: ", TEH.CounterTR); //_trCounter = 0;
 		//D(log_info_f("TriacOpens/sec: ", TEH.CounterTRopen);) //_trOpens = 0;
