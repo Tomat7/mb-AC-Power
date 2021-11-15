@@ -9,38 +9,46 @@ void encoder_Setup()
 void encoder_Check()
 {
 	key.readkey();
+	key.readencoder();
+
 	if (isSetMenu)
 	{
-		key.readencoder();     // можно не так часто
-		if (key.encoder != 0) encoder_Turn();		// вращение
+		if (key.encoder != 0)
+		{
+			encoder_Turn();
+		}
+		else if ((key.previous_millis_down + 5000) < millis())
+		{
+			isSetMenu = false;
+			lcdMode = SHOW_VA;
+		}
 	}
-	if ((millis() - msKeys) > 200)
-	{
-		msKeys = millis();
-		encoder_Keys();
-		//if (isSetMenu) display_Oled();
-	}
-}
 
-void encoder_Keys()
-{
+	if ((key.previous_millis_down + 1000000) < millis()) isScreenSaver = true;
+	else isScreenSaver = false;
+
 	if (key.shot_press()) encoder_ShortPress();	// Короткое нажатие кнопки - показать ток и напряжение
 	if (key.long_press()) encoder_LongPress();	// Долгое нажатие кнопки - переход на локальное управление
-	if (key.encoder != 0) encoder_Turn();		// вращение
 
-	if (isSetMenu && ((key.previous_millis_down + 5000) < millis()))
-	{
-		isSetMenu = false;
-		lcdMode = SHOW_VA;
-	}
+}
+
+/*
+void encoder_Keys()
+{
+	//	if (key.shot_press()) encoder_ShortPress();	// Короткое нажатие кнопки - показать ток и напряжение
+	//	if (key.long_press()) encoder_LongPress();	// Долгое нажатие кнопки - переход на локальное управление
+	//	if (key.encoder != 0) encoder_Turn();		// вращение
+
+
 
 	if ((key.previous_millis_down + 1000000) < millis()) { isScreenSaver = true; }
 	else { isScreenSaver = false; }
 }
+*/
 
 void encoder_ShortPress()
 {
-	display_Init();
+	//	display_Init();
 
 	if (isLocalMode)
 	{
@@ -52,11 +60,12 @@ void encoder_ShortPress()
 	else
 	{
 		lcdMode = static_cast<DispScreen>(static_cast<int>(lcdMode) + 1);
-		display_Clear();
-		display_Switch();
+		//		display_Clear();
+		//		display_Switch();
 		log_debug_ln(". ENCODER Short while Remote");
 	}
 
+//	isScreenSaver = false;
 	display_Info();
 }
 

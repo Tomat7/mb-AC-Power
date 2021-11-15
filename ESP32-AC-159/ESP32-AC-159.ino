@@ -16,7 +16,7 @@
 #include <ModbusIP_ESP8266.h>
 #include <ACpower3.h>
 
-#include <esp_arduino_version.h>
+//#include <esp_arduino_version.h>
 #include <core_version.h>
 #include "config.h"
 #include "config_wifi.h"
@@ -24,7 +24,7 @@
 #include "config_libs.h"
 #include "variables.h"
 #include "macros.h"
-
+//
 
 void setup()
 {
@@ -52,12 +52,7 @@ void setup()
 	setup_DS();
 
 	tick_Led();
-	TEH.initTR();						// один раз!
-	TEH.initZC(ZCINT_MODE, false);		// один раз!
-	TEH.initADC(ADC_RATE, ADC_WAVES);	// один раз!
-	TEH.setADCratio(I_RATIO, U_RATIO, ANGLE_LAG);	// можно запускать повторно для корректировки
-	TEH.setRMScorrection(NULL, Ucorr);	// можно запускать повторно во время работы
-	log_cfg_addstr(TEH.LibConfig);
+	setup_TEH();
 
 	tick_Led();
 	log_cfg_ln(" . Free memory: ", String(ESP.getFreeHeap()));
@@ -68,7 +63,7 @@ void setup()
 void loop()
 {
 	TEH.control();
-	//TEH.control(5000);  // ручное управление углом, без стабилизации!
+	//TEH.control(5000);  // ручное управление углом открытия, без стабилизации!
 
 	if ((millis() - msPrint) > msShowPeriod)
 	{

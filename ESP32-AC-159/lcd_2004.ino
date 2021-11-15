@@ -43,32 +43,28 @@ void lcd_LibInfo()
 
 void lcd_Info()
 {
-//	if ((millis() - msDisplay) > (msShowPeriod / 4))
-//	{
-		msDisplay = millis();
-		lcd_Clear();
+	lcd_Clear();
 
-		if (isScreenSaver)
-		{
-			lcdMode = static_cast<DispScreen>(static_cast<int>(lcdMode) + 1);
-			if (TEH.Pset > 0) LCD.noBacklight();
-		}
+	if (isScreenSaver)
+	{
+		lcdMode = static_cast<DispScreen>(static_cast<int>(lcdMode) + 1);
+		if (TEH.Pset > 0) LCD.noBacklight();
+	}
 
-		if (lcdMode == SHOW_END) lcdMode = SHOW_POWER;
-		
-		if (lcdMode == SHOW_POWER)
-		{
-			lcd_Power("Pnow", TEH.Pnow, DS[0].Temp, 0);
-			lcd_Power("Pset", TEH.Pset, DS[1].Temp, 1);
-			lcd_Power("Angle", TEH.Angle, DS[2].Temp, 2);
-			lcd_Spinner(); 
-			lcd_Status();
-		}
-		else if (lcdMode == SHOW_VA)		{ lcd_VA(); lcd_Spinner(); }
-		else if (lcdMode == SHOW_NETCONFIG) { lcd_NetConfig(); }
-		else if (lcdMode == SHOW_UPTIME)	{ lcd_UpTime(); }
-		//else								{ lcdMode = SHOW_END; }
-//	}
+	if (lcdMode == SHOW_END) lcdMode = SHOW_POWER;
+
+	if (lcdMode == SHOW_POWER)
+	{
+		lcd_Power("Pnow", TEH.Pnow, DS[0].Temp, 0);
+		lcd_Power("Pset", TEH.Pset, DS[1].Temp, 1);
+		lcd_Power("Angle", TEH.Angle, DS[2].Temp, 2);
+		lcd_Spinner();
+		lcd_Status();
+	}
+	else if (lcdMode == SHOW_VA) { lcd_VA(); lcd_Spinner(); }
+	else if (lcdMode == SHOW_NETCONFIG) { lcd_NetConfig(); }
+	else if (lcdMode == SHOW_UPTIME) { lcd_UpTime(); }
+
 }
 
 void lcd_Power(const char* Sname, uint16_t Pshow, float Tshow, int z)
@@ -77,10 +73,10 @@ void lcd_Power(const char* Sname, uint16_t Pshow, float Tshow, int z)
 	LCD.setCursor(0, z);
 	if (z == 2) LCD.printf("%s %5d   %5.2f%c", Sname, Pshow, Tshow, degC);
 	else LCD.printf("%s  %4dw   %5.2f%c", Sname, Pshow, Tshow, degC);
-//	LCD.printf("%s %4dw  %5.2f%c ", Sname, Pshow, Tshow, degC);
+	//	LCD.printf("%s %4dw  %5.2f%c ", Sname, Pshow, Tshow, degC);
 }
 
-/* old style 
+/* old style
 void lcd_Power(const char* Sname, uint16_t Pshow, float Tshow, int z)
 {
 	char degC = 223;

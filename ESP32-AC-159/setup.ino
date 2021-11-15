@@ -9,13 +9,25 @@ void setup_LogCfg(char *fname)
 	log_cfg_ln(String(" . version: ") + VERSION_CODE);
 }
 
+void setup_TEH()
+{
+#ifdef USE_3PHASE
+	TEH.initTR();						// один раз!
+	TEH.initZC(ZCINT_MODE, false);		// один раз!
+	TEH.initADC(ADC_RATE, ADC_WAVES);	// один раз!
+	TEH.setADCratio(I_RATIO, U_RATIO, ANGLE_LAG);	// можно запускать повторно для корректировки
+	TEH.setRMScorrection(NULL, Ucorr);	// можно запускать повторно во время работы
+	log_cfg_addstr(TEH.LibConfig);
+#else
+	TEH.init(I_RATIO, U_RATIO);
+#endif
+}
+
 void setup_Pins()
 {
 	pinMode(TICKTOCK_LED, OUTPUT);
-
 	pinMode(COOLER_PIN, OUTPUT);
 //	pinMode(PIN_COOLER2, OUTPUT);
-
 	digitalWrite(COOLER_PIN, HIGH);
 //	digitalWrite(PIN_COOLER2, HIGH);
 }

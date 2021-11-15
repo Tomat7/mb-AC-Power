@@ -21,7 +21,6 @@ void oled_String(String str0, int X, int Y)
 	LD.printString_6x8(str0.c_str());
 }
 
-
 void oled_Info()
 {
 	if ((millis() - msDisplay) > (SHOW_PERIOD - 100))

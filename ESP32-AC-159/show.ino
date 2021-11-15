@@ -25,8 +25,10 @@ void print_More()		// MORE start
 		log_info_ln("Pweb: ", Pweb);
 		log_info_ln("Penc: ", Pencoder);
 		log_info_ln("RMScounter/sec: ", TEH.CounterRMS);
+#ifdef USE_3PHASE
 		log_info_ln("Ucounter: ", TEH.CounterU);
 		log_info_ln("Icounter: ", TEH.CounterI);
+#endif
 		log_info_ln("X2: ", TEH.X2);
 	}
 }

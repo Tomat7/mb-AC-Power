@@ -2,10 +2,10 @@
 
 #if PLC_ID == 37
 
-#define SHOW_PERIOD	1000			// как часто обновлять информацию на экране и в Serial
+#define SHOW_PERIOD	1000	// как часто обновлять информацию на экране и в Serial
 
 //#define USE_DHCP		// если нет USE_DHCP IP-address будет задан на основе PLC_ID.
-#define USE_3PHASE		// использовать 3 фазы (ACpower3 вместо ACpower)
+//#define USE_3PHASE		// использовать 3 фазы (ACpower3 вместо ACpower)
 #define USE_MODBUS		// устанавливать мощность из регистров Модбаса
 //#define USE_SETSERIAL	// устанавливать мощность с СОМ-порта
 //#define USE_WEBSERVER	// устанавливать/показывать мощность с/на WEB-странице

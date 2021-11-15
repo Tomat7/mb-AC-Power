@@ -49,14 +49,14 @@ void display_VerDate(char *chVer)
 	log_cfg_ln("-- NO any display in this version.");
 #endif
 }
-
+ 
 void display_SSID()
 {
 #if defined(USE_OLED)
 	oled_String(WIFI_NAME, 0, 5);
 #elif defined USE_LCD
 	lcd_String(WIFI_NAME, 0, 3);
-#endif
+#endif 
 }
 
 void display_MAC()
