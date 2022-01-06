@@ -4,10 +4,12 @@
 #include "logging.h"
 #include "modules.h"
 #include "teh.h"
+#include "Wire.h"
 
 #ifdef USE_LCD
 #include <LiquidCrystal_I2C.h>
 #define I2C_SPEED 400000
+//LiquidCrystal_I2C LCD(0x27);
 LiquidCrystal_I2C LCD(0x27, 20, 4);
 //DispScreen lcdMode = SHOW_POWER;
 char degC = 223;
@@ -27,6 +29,14 @@ void lcd_Init()
 	LCD.createChar(7, Backslash);
 }
 
+void lcd_ReInit()
+{
+	LCD.reinit();
+//	LCD.backlight();
+	//	Wire.setClock(I2C_SPEED);
+//	LCD.createChar(7, Backslash);
+}
+
 void lcd_SetBackLight()
 {
 	static bool isBacklight = true;
@@ -36,23 +46,24 @@ void lcd_SetBackLight()
 		lcdMode = static_cast<DispScreen>(static_cast<int>(lcdMode) + 1);
 		if (TEH.Pset && isBacklight && (lcdMode == SHOW_NETCONFIG)) lcdMode = SHOW_POWER;
 
-		if (!TEH.Pset && isBacklight)
-		{
-			LCD.noBacklight();
-			isBacklight = false;
+		if		(!TEH.Pset && isBacklight)
+		{ 
+			LCD.noBacklight(); 
+			isBacklight = false; 
 		}
 		else if (TEH.Pset && !isBacklight)
-		{
-			//	LCD.init();
+		{ 
 			LCD.backlight();
-			isBacklight = true;
+			isBacklight = true; 
 		}
 	}
-	else if (!isBacklight)
-	{
-		LCD.backlight();
-		isBacklight = true;
+	else if (!isBacklight) 
+	{ 
+		LCD.backlight(); 
+		isBacklight = true; 
 	}
+
+	return;
 }
 
 void lcd_Clear()
@@ -71,7 +82,7 @@ void lcd_String(String str0, int X, int Y)
 	LCD.setCursor(X, Y);
 	LCD.print(str0);
 }
-// =============================
+
 
 void lcd_VerDate(char* chVer)
 {
@@ -98,16 +109,17 @@ void lcd_Info()
 
 	if (lcdMode == SHOW_POWER)
 	{
-		lcd_Power("Pnow", TEH.Pnow, dsTemp[0], 0);
-		lcd_Power("Pset", TEH.Pset, dsTemp[1], 1);
+		lcd_Power("Pnow",  TEH.Pnow,  dsTemp[0], 0);
+		lcd_Power("Pset",  TEH.Pset,  dsTemp[1], 1);
 		lcd_Power("Angle", TEH.Angle, dsTemp[2], 2);
 		lcd_Spinner();
 		lcd_Status();
 	}
-	else if (lcdMode == SHOW_VA) { lcd_VA(); lcd_Spinner(); lcd_Status(); }
+	else if (lcdMode == SHOW_VA)		{ lcd_VA(); lcd_Spinner(); lcd_Status(); }
 	else if (lcdMode == SHOW_NETCONFIG) { lcd_NetConfig(); }
-	else if (lcdMode == SHOW_UPTIME) { lcd_UpTime(); }
+	else if (lcdMode == SHOW_UPTIME)	{ lcd_UpTime(); }
 
+	return;
 }
 
 void lcd_Power(const char* Sname, uint16_t Pshow, float Tshow, int z)
@@ -116,6 +128,7 @@ void lcd_Power(const char* Sname, uint16_t Pshow, float Tshow, int z)
 	LCD.setCursor(0, z);
 	if (z == 2) LCD.printf("              %5.2f%c", Tshow, degC);
 	else LCD.printf("%s   %4dw  %5.2f%c", Sname, Pshow, Tshow, degC);
+	return;
 }
 
 /* old style
@@ -139,6 +152,8 @@ void lcd_VA()
 		LCD.setCursor(0, i);
 		LCD.printf("%4dw   %3dv  %5.2fa", TEH.P[i], (int)TEH.U[i], TEH.I[i]);
 	}
+
+	return;
 }
 
 void lcd_Status()
@@ -157,6 +172,8 @@ void lcd_Status()
 
 	LCD.setCursor(3, 3);
 	LCD.printf("    %5d %s", TEH.Angle, strStatus.c_str());
+
+	return;
 }
 
 void lcd_Spinner()
@@ -183,6 +200,8 @@ void lcd_Spinner()
 			LCD.print(".");
 		}
 	}
+
+	return;
 }
 
 

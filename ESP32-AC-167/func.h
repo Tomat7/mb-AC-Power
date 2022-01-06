@@ -24,7 +24,10 @@ String strUptime();
 String strFreeMem();
 String strIPaddr();
 String strMACaddr();
+String strMACaddr(byte mac[6]);
 String strWiFiName();
+String strWiFiRSSI();
+String strWiFiBSSID();
 
 bool needUpdate(int m);
 bool needPrint(int m);
@@ -45,4 +48,3 @@ void print_Debug();
 void start_ControlTask();
 void stop_ControlTask();
 void Control_task(void* parameter);
-

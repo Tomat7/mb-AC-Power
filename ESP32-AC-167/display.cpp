@@ -30,6 +30,15 @@ void display_Init()
 #endif
 }
 
+void display_ReInit()
+{
+#if defined USE_OLED
+	oled_Init();
+#elif defined USE_LCD
+	lcd_ReInit();
+#endif
+}
+
 void display_Clear()
 {
 #if defined USE_OLED

@@ -1,6 +1,5 @@
 // 
 #include "teh.h"
-#include "func.h"
 #include "logging.h"
 
 #ifdef USE_3PHASE
@@ -25,15 +24,17 @@ void setup_TEH()
 	TEH.initADC(ADC_RATE, ADC_WAVES);	// один раз!
 	TEH.setADCratio(I_RATIO, U_RATIO, ANGLE_LAG);	// можно запускать повторно для корректировки
 	TEH.setRMScorrection(NULL, Ucorr);	// можно запускать повторно во время работы
-	log_cfg_addstr(TEH.LibConfig);
 #else
 	TEH.init(I_RATIO, U_RATIO);
 #endif
+	
+	log_cfg_addstr(TEH.LibConfig);
+	return;
 }
 
 void check_TEH()
 {
-	TEH.control(selectPower());
+	TEH.control();
 }
 
 

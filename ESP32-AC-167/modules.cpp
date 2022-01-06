@@ -71,8 +71,13 @@ void check_Telnet()
 void send_Telnet(String msg0)
 {
 #ifdef USE_TELNET
-	telnet_Info(msg0);
+	telnet_Send(msg0);
 #endif
 }
 
-
+void send_Syslog(String msg0)
+{
+#ifdef USE_SYSLOG
+	syslog_Info(msg0);
+#endif
+}

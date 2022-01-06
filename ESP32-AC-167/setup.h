@@ -18,5 +18,5 @@ void setup_Telnet();
 void setup_Modbus();
 void setup_PinInfo();
 void setup_DS();
-
+void setup_Syslog();
 

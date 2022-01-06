@@ -9,8 +9,8 @@
 void serial_Setup()
 {
 	Serial.begin(115200);
-	delay(1000);
-	Serial.print(strConfig);
+//	delay(1000);
+//	Serial.print(strConfig);
 }
 #endif //SERIAL_CONFIG
 

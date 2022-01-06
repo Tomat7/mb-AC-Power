@@ -148,7 +148,7 @@ void oled_Power(uint16_t Pshow)
 	{
 		LD.printString_12x16("-", 80, 0);
 		LD.printString_12x16("-", 68, 3);
-}
+	}
 }
 
 void oled_Status()

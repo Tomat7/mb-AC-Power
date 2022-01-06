@@ -2,14 +2,17 @@
 
 #if PLC_ID == 37
 
+#define PLC_NAME "PLC-37"
 #define SHOW_PERIOD	1000	// как часто обновлять информацию на экране и в Serial
 #define LCD_SAVER_TIMEOUT 1*60*1000	// Скринсейвер таймаут
+#define WIFI_CHANNEL 6
 
 #define USE_DHCP		// если нет USE_DHCP IP-address будет задан на основе PLC_ID.
 //#define USE_3PHASE		// использовать 3 фазы (ACpower3 вместо ACpower)
 #define USE_MODBUS		// устанавливать мощность из регистров Модбаса
 //#define USE_SETSERIAL	// устанавливать мощность с СОМ-порта
 //#define USE_WEBSERVER	// устанавливать/показывать мощность с/на WEB-странице
+#define USE_SYSLOG		// SYSLOG facility for logging 
 #define USE_TELNET		// запусткать telnetd для возможности диагностики (почти бесполезная фича :-)
 //#define USE_SETTELNET	// устанавливать мощность с Telnet-подключения
 #define USE_ENCODER		// устанавливать мощность с энкодера
@@ -24,7 +27,7 @@
 //#define DEV_DEBUG		// скомпилить DEBUG версию и выводить в COM-порт еще больше информации
 
 // ACpower3 config
-#define POWER_MAX 9000		// больше этой мощности установить не получится
+#define POWER_MAX 3500		// больше этой мощности установить не получится
 #define ZCINT_MODE RISING	// по какому фронту отрабатывать прерывание детектора нуля
 #define ADC_RATE 200		// количество отсчетов АЦП на ПОЛУволну - 200 (для расчета прерываний)
 #define ADC_WAVES 4			// количество обсчитываемых ПОЛУволн 
@@ -69,22 +72,22 @@
 #define ENCODER_pDT 17		// Pin для энкодера DT
 #define ENCODER_STEP 50
 
-#define OTA_HOSTNAME "PLC-37 POWER_v" VERSION_CODE
-#define ESP_HOSTNAME "PLC-37_esp32"
-
 #endif	//PLC_ID == 37
 
 
 #if PLC_ID == 39
 
+#define PLC_NAME "PLC-39"
 #define SHOW_PERIOD	1000				// как часто обновлять информацию на экране и в Serial
 #define LCD_SAVER_TIMEOUT 15*60*1000	// Скринсейвер таймаут
+#define WIFI_CHANNEL 11
 
 //#define USE_DHCP		// если нет USE_DHCP IP-address будет задан на основе PLC_ID.
 #define USE_3PHASE		// использовать 3 фазы (ACpower3 вместо ACpower)
 #define USE_MODBUS		// устанавливать мощность из регистров Модбаса
 //#define USE_SETSERIAL	// устанавливать мощность с СОМ-порта
 //#define USE_WEBSERVER	// устанавливать/показывать мощность с/на WEB-странице (почти бесполезная фича :-)
+#define USE_SYSLOG		// SYSLOG facility logging 
 #define USE_TELNET		// запусткать telnetd для возможности диагностики (почти бесполезная фича :-)
 //#define USE_SETTELNET	// устанавливать мощность с Telnet-подключения
 #define USE_ENCODER		// устанавливать мощность с энкодера
@@ -123,8 +126,6 @@
 #define ENCODER_pDT 4		// Pin для энкодера DT
 #define ENCODER_STEP 50
 
-#define OTA_HOSTNAME "PLC-39 POWER_v" VERSION_CODE
-#define ESP_HOSTNAME "PLC-39_esp32"
 #endif	// PLC_ID == 39
 
 #ifndef USE_DHCP
@@ -132,4 +133,4 @@
 #define ETHERNET_IP IP_NETWORK + PLC_ID  // задаём IP адрес Ethernet модуля 
 #endif	// !USE_DHCP
 
-#define MAX_SRV_CLIENTS 1
+#define MAX_SRV_CLIENTS 4

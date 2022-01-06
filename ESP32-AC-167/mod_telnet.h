@@ -13,7 +13,7 @@ void telnet_Print(String msg0, uint8_t z);
 void telnet_Print1(String msg0, uint8_t z);
 void telnet_Print2(String msg0, String msg1, uint8_t z);
 void telnet_Println(String msg0, uint8_t z);
-void telnet_Info(String msg0);
+void telnet_Send(String msg0);
 void telnet_Input(uint8_t x);
 
 #endif	// USE_TELNET

@@ -38,6 +38,10 @@ extern bool dsIsParasite[];
 #include "mod_web.h"
 #endif
 
+#ifdef USE_SYSLOG
+#include "mod_syslog.h"
+#endif
+
 void update_DS();
 void correct_DS();
 void update_Modbus();
@@ -48,3 +52,4 @@ void check_Web();
 void check_OTA();
 void check_Telnet();
 void send_Telnet(String msg0);
+void send_Syslog(String msg0);

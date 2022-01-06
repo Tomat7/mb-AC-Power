@@ -3,6 +3,8 @@
 #include "config_plc.h"
 #include "logging.h"
 #include "macros.h"
+#include "modules.h"
+#include "network.h"
 
 String strConfig;
 

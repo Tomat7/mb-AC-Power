@@ -7,6 +7,7 @@
 #ifdef USE_DS18B20
 
 extern float dsTemp[];
+extern uint32_t dsErrors[];
 extern const int nSensor;
 extern bool dsIsParasite[];
 

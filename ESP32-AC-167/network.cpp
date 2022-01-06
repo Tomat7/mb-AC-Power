@@ -11,10 +11,16 @@
 #error "Wrong module defined. Use ESP32 only."
 #endif //ARDUINO_ARCH_ESP32
 
-
 // Внимание! Проверь пароль WIFI_PASS в config_wifi.h
+#if WIFI_CHANNEL==6
+byte bssid[] = { 0x74, 0x83, 0xC2, 0x3A, 0x2C, 0xF7 };
+#endif
 
-uint16_t cntWiFiErrors = 0;
+#if WIFI_CHANNEL==11
+byte bssid[] = { 0x18, 0xE8, 0x29, 0x09, 0xA1, 0xE2 };
+#endif
+
+uint16_t cntWiFiErrors = 1;
 
 #ifndef USE_DHCP
 IPAddress local_IP(ETHERNET_IP);
@@ -24,8 +30,14 @@ IPAddress subnet(255, 255, 255, 0);
 
 void setup_Network()   //Config Modbus IP
 {
-	log_cfg_ln("+ WiFi connecting to SSID: ", WIFI_NAME);
-
+	log_cfg("+ WiFi network: ", WIFI_NAME);
+  
+#ifdef WIFI_CHANNEL
+  log_cfg_ln(", AP: " + strMACaddr(bssid) + " on channel: " + WIFI_CHANNEL);
+#else
+  log_cfg_ln("");
+#endif 
+  
 	display_MAC();
 	log_cfg_ln(" . MAC: ", WiFi.macAddress());
 
@@ -55,7 +67,13 @@ void initETH()
 
 	WiFi.mode(WIFI_STA);
 	WiFi.setSleep(false);
+
+#ifdef WIFI_CHANNEL
+//  log_cfg_ln(" . Looking for AP: " + strMACaddr(bssid) + " on channel: " + WIFI_CHANNEL);
+	WiFi.begin(WIFI_NAME, WIFI_PASS, WIFI_CHANNEL, bssid, true);
+#else
 	WiFi.begin(WIFI_NAME, WIFI_PASS);
+#endif // WIFI_CHANNEL
 
 	while ((WiFi.status() != WL_CONNECTED) && (cntWiFiErrors < (WIFI_TIMEOUT + WIFI_TIMEOUT)))
 	{
@@ -118,5 +136,5 @@ void serialIP()
 	log_cfg_ln(" . IP: ", IPtoStr(WiFi.localIP()));
 	log_cfg_ln(" . MASK: ", IPtoStr(WiFi.subnetMask()));
 	log_cfg_ln(" . GATEWAY: ", IPtoStr(WiFi.gatewayIP()));
+	log_cfg_ln(" . AP MAC: ", WiFi.BSSIDstr());
 }
-

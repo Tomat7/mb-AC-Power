@@ -1,5 +1,6 @@
 // 
 #include "mod_ota.h"
+#include "modules.h"
 #include "macros.h"
 #include "logging.h"
 #include "display.h"
@@ -37,6 +38,7 @@ void ota_Setup()
 			// NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
 			log_info_ln("");
 			log_info_ln(" OTA update starting " + type);
+			send_Syslog("OTA update starting ");
 
 			display_OTAbegin();
 		});
@@ -54,6 +56,7 @@ void ota_Setup()
 			log_info_ln("");
 			log_info_ln(" OTA update finished OK!");
 			log_info_ln(" rebooting...");
+			send_Syslog("OTA update finished OK! rebooting... ");
 			display_OTAend();
 			delay(3000);
 			//modbusON = true;
@@ -82,6 +85,7 @@ void ota_Setup()
 
 			log_info_ln(OTAErrorInfo);
 			log_info_ln("rebooting...");
+			send_Syslog(OTAErrorInfo + "rebooting... " );
 			display_OTAerror(OTAErrorInfo);
 			delay(3000);
 			(void)error;

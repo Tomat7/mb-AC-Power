@@ -1,21 +1,21 @@
 #pragma once
-#include <esp_arduino_version.h>
+//#include <esp_arduino_version.h>
 #include <core_version.h>
 
-#define PLC_ID 37
-#define VERSION_CODE "163"
+#define PLC_ID 39
+#define VERSION_CODE "167"
 
 // PLC configuration // *** Moved to config_plc.h ***
 // PIN configuration // *** Moved to config_plc.h ***
 // Коэффициенты для измерителей тока и напряжения // *** Перенесено в config_plc.h ***
 // Смещение нуля датчиков тока и напряжения - калибруются в библиотеке ACpower
 
-#define SHOW_PERIOD	1000				// как часто обновлять информацию на экране и в Serial
 #define SKETCHINFO __DATE__ " " __TIME__ " " __FILE__
+#define SKETCHINFO2 __TIMESTAMP__ " " __BASE_FILE__ __VERSION__ __FILE_NAME__
 
 #ifdef ESP_ARDUINO_VERSION_MAJOR
-#define ESP32_ARDUINO_VERSION ESP_ARDUINO_VERSION_MAJOR + "." + \
-		ESP_ARDUINO_VERSION_MINOR + "." + ESP_ARDUINO_VERSION_PATCH
+//#define ESP32_ARDUINO_VERSION String(ESP_ARDUINO_VERSION_MAJOR) + "." + String(ESP_ARDUINO_VERSION_MINOR) + "." + String(ESP_ARDUINO_VERSION_PATCH)
+#define ESP32_ARDUINO_VERSION ESP_ARDUINO_VERSION_MAJOR + "." + ESP_ARDUINO_VERSION_MINOR + "." + ESP_ARDUINO_VERSION_PATCH
 #else 
 #define ESP32_ARDUINO_VERSION ARDUINO_ESP32_RELEASE
 #endif
@@ -29,8 +29,8 @@
 // Cooler fans pins 
 #define COOLER_PIN 2
 //#define PIN_COOLER2 12
-#define COOLER_DS_IDX 1
-#define COOLER_TEMP_START 30
+#define COOLER_DS_ID 1
+#define COOLER_DS_TEMP 40
 
 // DS18B20 configuration
 #define DS_PIN { 18, 23, 19 }    // pin на котором ds18b20 (не забывайте про подтягивающий резистор 4.7 кОм!)
@@ -68,4 +68,3 @@
 #define WIFI_PASS "filimon7"
 #define OTA_PASS "filimon7"
 #define OTA_PORT 8266
-

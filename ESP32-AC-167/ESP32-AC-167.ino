@@ -1,8 +1,12 @@
 //
+#include "mod_syslog.h"
 #include "config.h"
 #include "config_plc.h"
 //#define PLC_ID PLC_NUM // config_plc.h for details.
 
+//#include <esp_arduino_version.h>
+#include <core_version.h>
+#include <SPI.h>
 #include <WiFi.h>
 #include <ESPmDNS.h>
 #include <WiFiUdp.h>
@@ -12,17 +16,16 @@
 #include <WebServer.h>
 #include <FS.h>
 #include <Wire.h>
-#include <esp_arduino_version.h>
-#include <core_version.h>
 
+#include <Syslog.h>
 #include <OneWireNg.h>
 #include <DStemp.h>
 #include <ReadDigKey.h>
 #include <LiquidCrystal_I2C.h>
 #include <ASOLED.h>
 #include <ModbusIP_ESP8266.h>
-//#include <ACpower3.h>
-#include <ACpower.h>
+#include <ACpower3.h>
+//#include <ACpower.h>
 
 #include "config.h"
 #include "config_plc.h"
@@ -40,22 +43,30 @@
 #include "mod_telnet.h"
 #include "mod_encoder.h"
 #include "mod_serial.h"
+#include "mod_syslog.h"
 #include "modules.h"
 
 
 void setup()
 {
 	//strVersion = SKETCHINFO;
-	setup_LogCfg((char*)__FILE__);
 	setup_Pins();
-
 	tick_Led();
 	setup_Serial();
+	delay(1000);
+
+	tick_Led();
+	setup_LogCfg((char*)__FILE__);
+//	setup_Pins();
+//	setup_Serial();
 
 	tick_Led();
 	setup_Display(SKETCHINFO, VERSION_CODE);
 	setup_Encoder();
 	setup_Network();
+
+	tick_Led();
+	setup_Syslog();
 	setup_OTA();
 	setup_Web();
 	setup_Telnet();
@@ -74,6 +85,7 @@ void setup()
 	tick_Led();
 	log_cfg_ln(" . Free memory: ", String(ESP.getFreeHeap()));
 	log_cfg_ln("+ READY to work.");
+
 	msPrint = millis();
 }
 

@@ -7,20 +7,21 @@
 
 enum DispScreen
 {
-	SHOW_POWER, // присваивается 0
-	SHOW_VA, // присваивается 1
+	SHOW_POWER,		// присваивается 0
+	SHOW_VA,		// присваивается 1
 	SHOW_NETCONFIG, // присваивается 2
-	SHOW_UPTIME, // присваивается 3
-	SHOW_END, // присваивается 4
-//	COLOR_PINK, // присваивается 5
-//	COLOR_YELLOW, // присваивается 6
-//	COLOR_MAGENTA // присваивается 7
+	SHOW_UPTIME,	// присваивается 3
+	SHOW_END,		// присваивается 4
+//	COLOR_PINK,		// присваивается 5
+//	COLOR_YELLOW,	// присваивается 6
+//	COLOR_MAGENTA	// присваивается 7
 };
 
 extern DispScreen lcdMode;
 
 void setup_Display(String strVersion, String strVersionCode);
 void display_Init();
+void display_ReInit();
 void display_Clear();
 void display_String(String str0);
 void display_String(String str0, int X, int Y);
@@ -42,6 +43,7 @@ void display_OTAerror(String OTAerr);
 
 #ifdef USE_LCD
 void lcd_Init();
+void lcd_ReInit();
 void lcd_SetBackLight();
 void lcd_Clear();
 void lcd_String(String str0);

@@ -3,6 +3,7 @@
 #include "func.h"
 #include "display.h"
 #include "teh.h"
+#include "Wire.h"
 
 #ifdef USE_ENCODER
 #include <ReadDigKey.h>
@@ -23,21 +24,17 @@ void encoder_Check()
 {
 	key.readkey();
 	key.readencoder();
+	uint32_t encTimeout = millis() - key.previous_millis_down;
 
-	if (isSetMenu)
+	if (key.encoder != 0) encoder_Turn();
+	
+	if (isSetMenu && (encTimeout > SHOW_PERIOD * 5))
 	{
-		if (key.encoder != 0)
-		{
-			encoder_Turn();
-		}
-		else if ((millis() - key.previous_millis_down) > 5000)
-		{
-			isSetMenu = false;
-			lcdMode = SHOW_VA;
-		}
+		isSetMenu = false;
+		lcdMode = SHOW_VA;
 	}
 
-	if ((millis() - key.previous_millis_down) > LCD_SAVER_TIMEOUT)
+	if (encTimeout > LCD_SAVER_TIMEOUT)
 	{
 		isScreenSaver = true;
 		msPrintPeriod = SHOW_PERIOD * 3;
@@ -51,6 +48,27 @@ void encoder_Check()
 	if (key.shot_press()) encoder_ShortPress();	// Короткое нажатие кнопки - показать ток и напряжение
 	if (key.long_press()) encoder_LongPress();	// Долгое нажатие кнопки - переход на локальное управление
 
+	return;
+}
+
+
+void encoder_Turn()
+{
+	if (isSetMenu)
+	{
+		Pencoder += int(ENCODER_STEP * key.encoder * abs(key.encoder));
+		Pencoder = (Pencoder < 0) ? 0 : (Pencoder > POWER_MAX) ? POWER_MAX : Pencoder;
+		setPower(Pencoder);	// мощность будет меняться во время кручения энкодера
+		display_Power(Pencoder);
+	}
+	else
+	{
+		display_ReInit();
+	}
+	
+	key.encoder = 0;
+
+	return;
 }
 
 
@@ -70,6 +88,8 @@ void encoder_ShortPress()
 	}
 
 	display_Info();
+
+	return;
 }
 
 void encoder_LongPress()
@@ -82,17 +102,7 @@ void encoder_LongPress()
 	lcdMode = SHOW_POWER;
 	Pencoder = 0;
 	log_info_ln(". ENCODER Long Press");
-}
-
-void encoder_Turn()
-{
-	if (isSetMenu) {
-		Pencoder += int(ENCODER_STEP * key.encoder * abs(key.encoder));
-		Pencoder = (Pencoder < 0) ? 0 : (Pencoder > POWER_MAX) ? POWER_MAX : Pencoder;
-		setPower(Pencoder);	// мощность будет меняться во время кручения энкодера
-		display_Power(Pencoder);
-	}
-	key.encoder = 0;
+	return;
 }
 
 #endif //USE_ENCODER

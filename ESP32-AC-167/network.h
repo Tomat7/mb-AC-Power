@@ -3,9 +3,11 @@
 #include "config.h"
 #include "config_plc.h"
 
+#include <SPI.h>
 #include <WiFi.h>
+#include <WiFiUdp.h>
 
-// Внимание! Проверь пароль WIFI_PASS в config_wifi.h
+// Внимание! Проверь пароль WIFI_PASS в config.h
 
 extern uint16_t cntWiFiErrors;
 

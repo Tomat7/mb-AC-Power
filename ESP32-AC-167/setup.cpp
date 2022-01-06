@@ -1,15 +1,14 @@
 // 
 #include "setup.h"
+#include "func.h"
 
 void setup_LogCfg(char* fname)
 {
 	log_cfg_ln(String(fname));
 	log_cfg_ln(String(" . compiled on ") + __DATE__ + String(" ") + __TIME__);
 	log_cfg_ln(String(" . ESP32 Arduino core ") + ESP32_ARDUINO_VERSION + " / ESP-IDF " + ESP.getSdkVersion());
-	//	log_cfg(   String(" . ") + ESP.getChipModel() + " rev." + String(ESP.getChipRevision()) + " / ");
 	log_cfg(String(" . board: ") + ARDUINO_BOARD + " / " + ESP.getChipModel() + " rev." + String(ESP.getChipRevision()));
 	log_cfg_ln(" / " + String(ESP.getChipCores()) + " cores " + String(ESP.getCpuFreqMHz()) + " MHz");
-	//  log_cfg_ln(String(" . board: ") + ARDUINO_BOARD + " / " + ESP.getChipModel() + " rev." + String(ESP.getChipRevision()) + " / ");
 	log_cfg_ln(String(" . version: ") + VERSION_CODE);
 }
 
@@ -77,6 +76,16 @@ void setup_Telnet()
 #else
 	log_cfg_ln("-- NO TELNET server in this version.");
 #endif	// USE_TELNET
+}
+
+void setup_Syslog()
+{
+#ifdef USE_SYSLOG
+	syslog_Setup();
+	log_cfg_ln("+ SYSLOG to: " + syslog_ip.toString());
+#else
+	log_cfg_ln("-- NO SYSLOG in this version.");
+#endif	// USE_SYSLOG
 }
 
 void setup_Modbus()

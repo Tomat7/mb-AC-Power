@@ -4,6 +4,8 @@
 #include "macros.h"
 #include "logging.h"
 #include "func.h"
+#include "modules.h"
+
 
 #ifdef USE_TELNET
 WiFiServer telnetd(23);
@@ -28,16 +30,28 @@ void telnet_Check()
 	//check if there are any NEW clients
 	if (telnetd.hasClient())
 	{
-		for (i = 0; i < MAX_SRV_CLIENTS; i++)				//find free/disconnected spot
+		CPRINT("hasClient ");
+		for (i = 0; i < MAX_SRV_CLIENTS; i++)		//find free/disconnected spot
 		{
+			CPRINTLN(i);
+			if (!rClients[i]) CPRINTLN("noClient");
+			if (!rClients[i].connected()) CPRINTLN("notConnected");
 
 			if (!rClients[i] || !rClients[i].connected())
 			{
-				if (rClients[i]) rClients[i].stop();
-				rClients[i] = telnetd.available();
-				if (!rClients[i]) CPRINTLN("available broken");
+				CPRINTLN("noClient, noConnected");
+				if (rClients[i])
+				{
+					rClients[i].stop();
+					send_Syslog("Telnet [" + String(i) + "]: DISCONNECTED");
+					CPRINT("Telnet client: ["); CPRINT(i); CPRINT("] DISCONNECTED");
+				}
 
-				CPRINT("New client: "); CPRINT(i); CPRINT(' '); CPRINTLN(rClients[i].remoteIP());
+				rClients[i] = telnetd.available();	// NEW client!
+				if (!rClients[i]) CPRINTLN("available broken");	// lost connection while setup client
+
+				CPRINT("New client: ["); CPRINT(i); CPRINT("] "); CPRINTLN(rClients[i].remoteIP());
+				send_Syslog("New Telnet [" + String(i) + "]: " + IPtoStr(rClients[i].remoteIP()));
 				telnet_Print(strConfig, i);
 				telnet_Print2("Uptime: ", strUptime(), i);
 				break;
@@ -46,10 +60,19 @@ void telnet_Check()
 		if (i >= MAX_SRV_CLIENTS) { telnetd.available().stop(); }	//no free/disconnected spot so reject
 	}
 
-	for (i = 0; i < MAX_SRV_CLIENTS; i++)		//check Telnet-clients for data
+	//check EXISTING Telnet-clients for data
+	for (i = 0; i < MAX_SRV_CLIENTS; i++)	
 	{
-		if (rClients[i] && rClients[i].connected()) { telnet_Input(i); }
-		else { if (rClients[i]) rClients[i].stop(); }
+		if (rClients[i] && rClients[i].connected()) 
+		{ 
+			telnet_Input(i); 
+		}
+		else if (rClients[i])
+		{
+			rClients[i].stop();
+			send_Syslog("Telnet [" + String(i) + "]: DISCONNECTED");
+			CPRINT("Telnet client: ["); CPRINT(i); CPRINT("] DISCONNECTED");
+		}
 
 		if (!rClients[i] || !rClients[i].connected())
 		{
@@ -72,15 +95,7 @@ void telnet_Stop()
 void telnet_Print(String msg0, uint8_t z)
 {
 	uint32_t len0 = msg0.length();
-	//	char ch0[len0];
-	//	msg0.toCharArray(ch0, len0);
 	rClients[z].write(msg0.c_str(), len0);
-}
-
-void telnet_Print1(String msg0, uint8_t z)
-{
-	telnet_Print("\r\n", z);
-	telnet_Println(msg0, z);
 }
 
 void telnet_Print2(String msg0, String msg1, uint8_t z)
@@ -93,10 +108,10 @@ void telnet_Println(String msg0, uint8_t z)
 {
 	msg0 += "\r\n";
 	telnet_Print(msg0, z);
-	telnet_Print("PLC-" + String(PLC_ID) + "/> ", z);
+	telnet_Print(String(PLC_NAME) + "/> ", z);
 }
 
-void telnet_Info(String msg0)
+void telnet_Send(String msg0)
 {
 	for (uint8_t s = 0; s < MAX_SRV_CLIENTS; s++)
 	{
@@ -110,7 +125,7 @@ void telnet_Info(String msg0)
 
 void telnet_Input(uint8_t x)
 {
-	String T1, Var;
+	String T1, Var, slVar;
 
 	while (rClients[x].available())
 	{
@@ -118,6 +133,10 @@ void telnet_Input(uint8_t x)
 		Var += ch;
 		if ((ch == '\n') || !rClients[x].available())
 		{
+			slVar = Var;
+			slVar.remove(Var.lastIndexOf('\n') - 1);
+			send_Syslog("Telnet [" + String(x) + "]: " + slVar);
+
 			Var.toUpperCase();        // ??
 			if (Var.substring(0, 2) == "SI")
 			{
@@ -184,7 +203,6 @@ void telnet_Input(uint8_t x)
 				telnet_Println("", x);
 				//showDebug = true;
 			}
-
 			else if (Var.substring(0, 4) == "CONF")
 			{
 				CPRINTLN("Config... ");
@@ -207,6 +225,4 @@ void telnet_Input(uint8_t x)
 }
 
 #endif	// USE_TELNET
-
-
 
