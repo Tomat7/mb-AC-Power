@@ -1,0 +1,19 @@
+# Syntax Coloring Map 
+
+# Datatypes (KEYWORD1)
+ReadDigKey	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+long_press	KEYWORD2
+shot_press	KEYWORD2
+readkey		KEYWORD2
+readencoder	KEYWORD2
+pressed		KEYWORD2
+encoder		KEYWORD2
+add_key		KEYWORD2
+
+add_enccoder	KEYWORD2
+previous_millis_down	KEYWORD2
+
+# Constants (LITERAL1)
+
